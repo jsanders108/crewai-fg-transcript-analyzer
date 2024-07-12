@@ -145,7 +145,7 @@ This simple script creates an instance of the `FgTranscriptAnalyzerCrew` and ini
 
 The culmination of the AI agents' work is a comprehensive markdown report (`final_fg_report.md`) that provides valuable insights from the mock focus group discussion. Below is the full content of the final report:
 
-```markdown
+
 # White Strawberry Product Launch Focus Group Insights Report
 
 ## Executive Summary
