@@ -2,7 +2,7 @@
 
 ## Project Objective
 
-This project demonstrates the power of the CrewAI framework in assisting market researchers with rapid and efficient analysis of focus group transcripts. By leveraging multiple AI agents, each specialized in different aspects of the analysis process, we showcase how complex tasks can be broken down, processed, and synthesized into actionable insights.
+This project demonstrates the power of the CrewAI framework in assisting market researchers with rapid and efficient analysis of focus group transcripts. By leveraging multiple AI agents, each specialized in different aspects of the analysis process, I showcase how complex tasks can be broken down, processed, and synthesized into actionable insights.
 
 The primary objectives of this project are:
 
