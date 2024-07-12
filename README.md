@@ -145,7 +145,7 @@ This simple script creates an instance of the `FgTranscriptAnalyzerCrew` and ini
 
 The culmination of the AI agents' work is a comprehensive markdown report (`final_fg_report.md`) that provides valuable insights from the mock focus group discussion. Below is the full content of the final report:
 
-
+```markdown
 # White Strawberry Product Launch Focus Group Insights Report
 
 ## Executive Summary
@@ -250,4 +250,3 @@ This report demonstrates the power of CrewAI in distilling complex qualitative d
 Through this project, I've provided a compelling example of how CrewAI can be leveraged to streamline and enhance market research processes. By automating the tedious tasks of transcript summarization and preliminary analysis, researchers can focus their efforts on deeper interpretation and strategy development.
 
 The modular nature of the CrewAI framework allows for easy adaptation to various research scenarios, making it a valuable tool for any organization looking to gain deeper insights from qualitative data more efficiently.
-
