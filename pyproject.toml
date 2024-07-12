@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "fg_transcript_analyzer"
+version = "0.1.0"
+description = "fg_transcript_analyzer using crewAI"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<=3.13"
+crewai = {extras = ["tools"], version = "^0.28.8"}
+langchain_community = "0.0.29"
+poetry-dotenv-plugin = "^0.2.0"
+
+[tool.poetry.scripts]
+fg_transcript_analyzer = "fg_transcript_analyzer.main:run"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

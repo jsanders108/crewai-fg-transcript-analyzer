@@ -1,0 +1,56 @@
+summarize_task:
+  description: >
+    Read the provided focus group transcripts (accessible via the 
+    "read_transcript" tool) and create a comprehensive summary. Condense the discussions 
+    into a clear, concise account that captures the content of the conversations while 
+    maintaining chronological order. Ensure that all significant points raised during 
+    the focus group are included without adding interpretation or analysis.
+  expected_output: >
+    A concise yet comprehensive summary of the focus group 
+    transcripts, presented in chronological order. The summary should include:
+    1. An overview of topics discussed, in the order they were brought up
+    2. Key points made by participants, without interpretation
+    3. Notable or frequently mentioned opinions
+    4. Direct quotes that exemplify important points
+    5. A brief account of any exercises or activities conducted during the session
+
+analysis_task:
+  description: >
+    Analyze the summary of the focus group transcripts provided 
+    by the Summarizer Agent. Review the content in the context of the research 
+    objectives (accessible via the read_fg_objectives tool). Identify key themes, 
+    patterns, and insights that emerge from the summary. Pay particular attention 
+    to how the discussion points relate to the research objectives.
+  expected_output: >
+    A comprehensive analysis report that includes:
+    1. Identified key themes and patterns from the focus group summary
+    2. Insights derived from the discussion, especially those relating to the research objectives
+    3. Notable trends or unexpected findings
+    4. Areas of consensus or disagreement among participants
+    5. Potential implications of the findings
+    6. Any gaps in the information or areas that may require further investigation
+    7. Initial recommendations based on the analysis
+
+report_writing_task:
+  description: >
+    Using the comprehensive analysis provided by the Analyst Agent, 
+    create a polished, well-structured markdown report that effectively communicates 
+    the focus group findings, insights, and recommendations. The report should be 
+    tailored for stakeholders and decision-makers, presenting information in a clear, 
+    engaging, and actionable format.
+  expected_output: >
+    A final markdown report that includes:
+    1. Executive Summary: A brief overview of key findings and recommendations
+    2. Introduction: Background on the focus group objectives and methodology
+    3. Key Findings: Detailed presentation of main insights, organized by themes
+    4. Analysis: In-depth discussion of patterns, trends, and their implications
+    5. Participant Quotes: Relevant verbatim quotes to illustrate key points
+    6. Recommendations: Actionable suggestions based on the insights
+    7. Conclusions: Summary of the most important takeaways
+    8. Next Steps: Suggested actions or areas for further research
+    9. Appendices: Any additional relevant information
+
+    The report should use markdown formatting for headers, lists, emphasis, and 
+    links where appropriate. Ensure the document is well-organized, easy to navigate, 
+    and visually appealing within the constraints of markdown.
+
