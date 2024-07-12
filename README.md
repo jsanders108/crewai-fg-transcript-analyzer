@@ -1,94 +1,135 @@
-# Focus Group Transcript Analysis with CrewAI
+# CrewAI Focus Group Transcript Analyzer
 
 ## Project Objective
 
-This project demonstrates the power of the CrewAI framework in assisting market researchers with rapid and efficient analysis of focus group transcripts. By leveraging multiple AI agents, each specialized in different aspects of the analysis process, I showcase how complex tasks can be broken down, processed, and synthesized into actionable insights.
+I developed this project to demonstrate the power of the CrewAI framework in assisting market researchers with challenging tasks such as summarizing and analyzing focus group transcripts. By leveraging multiple AI agents working in concert, I showcase how complex analytical tasks can be completed quickly and efficiently.
 
-The primary objectives of this project are:
+The primary goals of this project are:
 
-1. To illustrate how CrewAI can be used to automate and streamline the focus group analysis workflow.
-2. To demonstrate the effectiveness of using multiple specialized agents for different stages of the analysis process.
-3. To showcase the ability to generate comprehensive, well-structured reports from raw focus group transcripts.
+1. To automate the process of summarizing focus group transcripts
+2. To perform in-depth analysis of the summarized content
+3. To generate a comprehensive report with actionable insights
 
-This approach can significantly reduce the time and effort required for qualitative data analysis, allowing researchers to focus on strategic decision-making rather than time-consuming manual analysis.
-
-## Project Structure
-
-The project consists of several key components:
-
-1. Configuration files (`agents.yaml` and `tasks.yaml`)
-2. Python scripts (`crew.py` and `main.py`)
-3. Input files (focus group objectives and transcript)
-4. Output file (final report)
+By achieving these objectives, I illustrate how CrewAI can significantly enhance the productivity and effectiveness of market research processes.
 
 ## Code Walkthrough
 
-### Configuration Files
+In this project, I utilized the latest version of CrewAI, showcasing its updated features and syntax. Let's break down the key components of my implementation:
 
-The `agents.yaml` and `tasks.yaml` files define the roles, characteristics, and tasks of our AI agents. For detailed content, see the respective code snippets below.
+### 1. Agent Configuration (agents.yaml)
 
+I defined the roles and responsibilities of the AI agents in the `agents.yaml` file:
+
+```yaml
 summarizer:
-  role: >
-    Focus Group Transcript Condenser
-  goal: >
-    Create accurate, concise, and objective summaries of focus group 
-    transcripts, capturing key themes and diverse viewpoints while maintaining 
-    chronological integrity
-  backstory: >
-    You are a specialized Focus Group Transcript Summarizer with 
-    a remarkable talent for distilling lengthy discussions into clear, concise 
-    summaries. Your expertise lies in capturing the essence of focus group 
-    conversations without losing critical details.
+  role: Focus Group Transcript Condenser
+  goal: Create accurate, concise, and objective summaries of focus group transcripts...
 
 analyst:
-  role: >
-    Focus Group Insights Analyst
-  goal: >
-    Analyze condensed focus group transcripts in the context of research 
-    objectives to extract actionable insights and meaningful patterns.
-  backstory: >
-    You are an expert Focus Group Insights Analyst with a keen eye for 
-    uncovering valuable patterns and insights from qualitative data. Your analytical 
-    skills are honed to interpret condensed focus group transcripts within the framework 
-    of specific research objectives.
+  role: Focus Group Insights Analyst
+  goal: Analyze condensed focus group transcripts in the context of research objectives...
 
 report_writer:
-  role: >
-    Focus Group Insights Report Writer
-  goal: >
-    Transform analytical insights into a comprehensive, well-structured, 
-    and persuasive report that effectively communicates focus group findings, 
-    insights, and actionable recommendations to stakeholders.
-  backstory: >
-    You are a highly skilled Focus Group Insights Report Writer with 
-    a talent for translating complex analytical findings into clear, compelling 
-    narratives. Your expertise lies in crafting reports that not only present data 
-    and insights but tell a coherent story that resonates with diverse stakeholders.
+  role: Focus Group Insights Report Writer
+  goal: Transform analytical insights into a comprehensive, well-structured, and persuasive report...
+```
 
-### Python Scripts
+I assigned each agent a specific role in the analysis process, ensuring a clear division of labor and expertise.
 
-#### crew.py
+### 2. Task Definition (tasks.yaml)
 
-This script sets up the CrewAI environment and defines the agents and tasks. See the `crew-py` code snippet for details.
+I outlined the specific tasks for each agent to perform in the `tasks.yaml` file:
 
-#### main.py
+```yaml
+summarize_task:
+  description: Read the provided focus group transcripts and create a comprehensive summary...
 
-This simple script runs the entire process. See the `main-py` code snippet for details.
+analysis_task:
+  description: Analyze the summary of the focus group transcripts provided by the Summarizer Agent...
 
-## Project Output
+report_writing_task:
+  description: Using the comprehensive analysis provided by the Analyst Agent, create a polished, well-structured markdown report...
+```
 
-The final output of this project is a comprehensive markdown report (`final_fg_report.md`) that provides a detailed analysis of the focus group discussion. An excerpt from the report is available in the `final-report-excerpt` code snippet.
+These task definitions guide the agents through the process of transforming raw transcript data into actionable insights.
 
-This output demonstrates the power of using CrewAI for focus group analysis. The AI agents have successfully condensed hours of discussion into a clear, actionable report that can guide business decisions and marketing strategies.
+### 3. Crew Assembly (crew.py)
 
-By leveraging this automated approach, market researchers can significantly reduce the time and effort required for qualitative data analysis, allowing them to focus on strategic interpretation and implementation of insights.
+The `crew.py` file is the heart of my CrewAI implementation, where I assembled the team of AI agents:
 
-## Code Snippets
+```python
+@CrewBase
+class FgTranscriptAnalyzerCrew():
+    agents_config = 'config/agents.yaml'
+    tasks_config = 'config/tasks.yaml'
 
-See the code snippets below for detailed implementation of key components:
+    def __init__(self) -> None:
+        self.OpenAIGPT35 = ChatOpenAI(
+            model_name="gpt-3.5-turbo", 
+            temperature=0)
+        
+        self.OpenAIGPT4o = ChatOpenAI(
+            model_name="gpt-4o", 
+            temperature=0)
 
-- `agents-yaml`: Configuration of AI agents
-- `tasks-yaml`: Definition of tasks for each agent
-- `crew-py`: Main CrewAI setup and execution
-- `main-py`: Entry point for running the analysis
-- `final-report-excerpt`: Sample output from the AI-generated report
+    @agent
+    def summarizer(self) -> Agent:
+        return Agent(
+            config=self.agents_config['summarizer'],
+            tools=[read_transcript, search_transcript], 
+            allow_delegation=False,
+            llm=self.OpenAIGPT4o,
+            verbose=True
+        )
+
+    # ... [similar methods for analyst and report_writer]
+
+    @crew
+    def crew(self) -> Crew:
+        return Crew(
+            agents=self.agents,
+            tasks=self.tasks,
+            process=Process.sequential,
+            verbose=2,
+            memory=True
+        )
+```
+
+In this class, I set up the agents with their respective configurations and tools, and assembled them into a crew that works sequentially to complete the analysis.
+
+### 4. Execution (main.py)
+
+Finally, I created a `main.py` file to kick off the entire process:
+
+```python
+#!/usr/bin/env python
+from fg_transcript_analyzer.crew import FgTranscriptAnalyzerCrew
+
+def run():   
+    FgTranscriptAnalyzerCrew().crew().kickoff()
+    
+if __name__ == "__main__":
+    run()
+```
+
+This simple script creates an instance of the `FgTranscriptAnalyzerCrew` and initiates the analysis process.
+
+## Output Showcase
+
+The culmination of the AI agents' work is a comprehensive markdown report (`final_fg_report.md`) that provides valuable insights from the focus group discussion. Here's a glimpse of what the report contains:
+
+1. Executive Summary
+2. Introduction (including background and objectives)
+3. Key Findings
+4. Analysis of patterns and trends
+5. Recommendations
+6. Conclusions and Next Steps
+
+This report demonstrates the power of CrewAI in distilling complex qualitative data into actionable insights, showcasing how AI can augment and accelerate the market research process.
+
+## Conclusion
+
+Through this project, I've provided a compelling example of how CrewAI can be leveraged to streamline and enhance market research processes. By automating the tedious tasks of transcript summarization and preliminary analysis, researchers can focus their efforts on deeper interpretation and strategy development.
+
+The modular nature of the CrewAI framework allows for easy adaptation to various research scenarios, making it a valuable tool for any organization looking to gain deeper insights from qualitative data more efficiently.
+
