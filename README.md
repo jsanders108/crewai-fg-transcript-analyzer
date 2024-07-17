@@ -1,4 +1,4 @@
-# CrewAI Focus Group Transcript Analyzer
+# CrewAI: Focus Group Transcript Analyzer
 
 ## Project Objective
 
